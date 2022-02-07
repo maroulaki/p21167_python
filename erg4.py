@@ -47,6 +47,7 @@ for i in range(100):
             b += 1
         else:
             ties += 1
+	#shuffle deck
     xartia.clear()
     for i in xarti:
         for j in color:
@@ -65,7 +66,6 @@ for i in range(100):
     #I get the last 10 or figures card from the deck, and append it to the player1,
     #while removing it from the deck
     for card in xartia[::-1]:
-        #print("Player A, last card: ",xartia[-1])
         if (card[0] in figures) or card[0]==10:
             player1.append(xartia.pop(xartia.index(card)))
             break
@@ -78,7 +78,6 @@ for i in range(100):
                 sum1=sum1+10
             else:
                 sum1=sum1+card[0]
-
     if sum1>21:
         b += 1
     else:
@@ -88,7 +87,7 @@ for i in range(100):
         while sum2<16:
             sum2=0
             #Must NOT have 10 or figures
-            #print("Player B, last card: ",xartia[-1])
+         	#I append the last card of the deck that is not 10 or figures
             for card in xartia[::-1]:
                 if not(card[0]==10 or (card[0] in figures)):
                     player2.append(xartia.pop(xartia.index(card)))
@@ -106,7 +105,7 @@ for i in range(100):
             b += 1
         else:
             ties += 1
-
+		#shuffle deck
         xartia.clear()
         for i in xarti:
             for j in color:
