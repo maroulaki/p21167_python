@@ -11,7 +11,7 @@ import re
 #Read txt file into string, replace new lines with space
 with open("two_cities_ascii.txt", "r") as file:
     text = file.read().replace("\n", " ")
-#Replace special characters with space
+#Remove special characters
 text = re.sub("[^A-Za-z ]","",text)
 words = text.split()
 
@@ -20,31 +20,32 @@ words = text.split()
 #the sum is 20.
 
 #I will count the number of words for every n={1,2,3...19} in a list
-word_rec = []
+word_count = []
 for n in range(19):
-	word_rec.append(0)
+	word_count.append(0)
 
 for word in words:
 	chars = len(word)
 	if chars <= 19:
-		word_rec[chars-1] += 1
+		word_count[chars-1] += 1
 
-
-#An equal number of 20-n char and n char words must be removed
+#An equal number of [20-n char] and [n char] words must be removed
 #word_rem list is a list of items to be removed from words
+#The smallest of the [20-n char] and [n char] sums is passed to the word_rem, to make the pairs
 word_rem = []
 for k in range(9):
-	if word_rec[k] < word_rec[18-k]:
-		word_rem.append(word_rec[k])
-	elif word_rec[k] > word_rec[18-k]:
-		word_rem.append(word_rec[18-k])
-word_rem.append(word_rec[9])
+	if word_count[k] < word_count[18-k]:
+		word_rem.append(word_count[k])
+	elif word_count[k] > word_count[18-k]:
+		word_rem.append(word_count[18-k])
+word_rem.append(word_count[9])
+#Filling word_rem from 9-18 with the same numbers
 for count in word_rem[8::-1]:
 	word_rem.append(count)
 
-#word_rem are removed from the total sum word_rec
+#word_rem are removed from the total sum word_count
 for k in range(19):
-	word_rec[k] = word_rec[k] - word_rem[k]
+	word_count[k] = word_count[k] - word_rem[k]
 
 for i in range(10):
-	print(word_rec[i],"words of ",i+1," letters remained \n")
+	print(word_count[i],"words of ",i+1," letters remained \n")
