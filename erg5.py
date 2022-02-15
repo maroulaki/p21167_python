@@ -11,29 +11,22 @@
 """
 import re
 #---Functions---
-#Function that searches a list of lists for the key. Returns the index of the sublist if found,
-#or -1 if not found
-def search(key, list):
-	pos = -1
-	for sublist in list:
-		if sublist[0] == key:
-			pos = list.index(sublist)
-			break
-	return pos
-#Sorting criteria is the number of times a word appears
-def MyFunc(sublist):
-	return sublist[1]
-#Finding the top n amount of words by finding the frequency and then sorting
+#Finding the top n amount of words by finding the frequency for each word. Every time
+#the most common word is found, it removed so that the next one will be found in the
+#next repetition.
 def top(words, n):
-	common_words = []
+	common_words = {}
 	for word in words:
-		pos = search(word, common_words)
-		if pos == -1:
-			common_words.append([word, 1])
+		exists = common_words.get(word, 0)
+		if exists != 0:
+			common_words.update({word: exists + 1})
 		else:
-			common_words[pos][1] += 1
-	common_words.sort(key=MyFunc, reverse=True)
-	print(n," most common: ",common_words[:n])
+			common_words.update({word: 1})
+	print(n," most common: ")
+	for i in range(n):
+		top_word = max(common_words, key=common_words.get)
+		print(top_word," : ",common_words.get(top_word),"\n")
+		common_words.pop(top_word)
 
 #---Program---
 #Read txt file into string, replace new lines with space
